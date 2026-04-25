@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Enternetz Interview Lens</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary:   #1a56db;
+  --primary-l: #e8f0fe;
+  --success:   #0f7b4f;
+  --success-l: #d1fae5;
+  --warn:      #b45309;
+  --warn-l:    #fef3c7;
+  --danger:    #b91c1c;
+  --danger-l:  #fee2e2;
+  --hold:      #6d28d9;
+  --hold-l:    #ede9fe;
+  --text:      #111827;
+  --muted:     #6b7280;
+  --border:    #e5e7eb;
+  --bg:        #f9fafb;
+  --white:     #ffffff;
+  --radius:    10px;
+  --shadow:    0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ── Nav ── */
+nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 54px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: var(--shadow);
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-logo {
+  width: 32px; height: 32px;
+  background: var(--primary);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: -0.5px;
+}
+
+.brand-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.brand-sub {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 2px;
+}
+
+.nav-tab {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.nav-tab:hover { background: var(--bg); color: var(--text); }
+.nav-tab.active { background: var(--primary-l); color: var(--primary); }
+
+.nav-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #d1d5db;
+  flex-shrink: 0;
+}
+.dot.rec { background: #ef4444; animation: blink 1.2s infinite; }
+.dot.ok  { background: #10b981; }
+
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+/* ── Pages ── */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ── Layout ── */
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 5rem;
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 0.875rem 1.1rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.card-title .icon {
+  width: 22px; height: 22px;
+  border-radius: 5px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.card-body { padding: 1.1rem; }
+
+/* ── Hindi hint ── */
+.hindi-hint {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 3px;
+  font-weight: 400;
+}
+
+/* ── Form ── */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+@media (max-width: 480px) {
+  .form-row { grid-template-columns: 1fr; }
+  .nav-tabs { display: none; }
+}
+
+.form-group { display: flex; flex-direction: column; gap: 4px; }
+
+label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+input[type=text], input[type=email], select, textarea {
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 8px 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--text);
+  background: var(--white);
+  outline: none;
+  transition: border 0.15s;
+  width: 100%;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(26,86,219,0.08);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.6;
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.btn:hover { background: var(--bg); }
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.btn-primary { background: var(--primary); color: white; border-color: var(--primary); }
+.btn-primary:hover { background: #1648c0; }
+
+.btn-danger  { color: var(--danger); border-color: #fca5a5; }
+.btn-danger:hover  { background: var(--danger-l); }
+
+.btn-success { color: var(--success); border-color: #6ee7b7; }
+.btn-success:hover { background: var(--success-l); }
+
+.btn-hold    { color: var(--hold); border-color: #c4b5fd; }
+.btn-hold:hover { background: var(--hold-l); }
+
+.btn-sm { padding: 5px 10px; font-size: 12px; }
+
+/* ── Record panel ── */
+.record-hero {
+  text-align: center;
+  padding: 1.5rem 1rem;
+}
+
+.timer-display {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.timer-sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+}
+
+.waveform {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 32px;
+  margin-bottom: 1.25rem;
+}
+
+.wb {
+  width: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  transition: height 0.08s ease;
+}
+
+.wb.live { background: var(--primary); }
+
+.rec-btns {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ── Stats bar ── */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.stat-box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.7rem 0.8rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.stat-val {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 3px;
+}
+
+.stat-lbl {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── Transcript ── */
+.tx-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.tx-lang-badge {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--primary-l);
+  color: var(--primary);
+  font-weight: 500;
+}
+
+#txHint {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 6px;
+  min-height: 18px;
+}
+
+/* ── Metric grid ── */
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+
+@media (max-width: 480px) {
+  .metric-grid { grid-template-columns: repeat(2, 1fr); }
+  .stats-bar   { grid-template-columns: repeat(2, 1fr); }
+}
+
+.metric-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem;
+}
+
+.m-name { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; }
+.m-val  { font-size: 15px; font-weight: 700; margin-bottom: 5px; }
+.m-bar  { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.m-fill { height: 100%; border-radius: 2px; transition: width 0.7s ease; }
+.m-sub  { font-size: 10px; color: var(--muted); margin-top: 3px; }
+
+/* ── Insights ── */
+.insight-list { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.insight-item {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  padding: 0.65rem 0.75rem;
+  border-radius: 7px;
+  font-size: 13px;
+  line-height: 1.5;
+  border: 1px solid transparent;
+}
+
+.insight-item.good   { background: var(--success-l); border-color: #a7f3d0; color: #065f46; }
+.insight-item.warn   { background: var(--warn-l);    border-color: #fde68a; color: #78350f; }
+.insight-item.bad    { background: var(--danger-l);  border-color: #fca5a5; color: #7f1d1d; }
+.insight-item.info   { background: var(--primary-l); border-color: #bfdbfe; color: #1e3a8a; }
+
+.insight-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+
+/* ── Decision ── */
+.decision-row {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.dec-btn {
+  flex: 1;
+  min-width: 90px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid var(--border);
+  background: var(--white);
+  cursor: pointer;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.15s;
+}
+
+.dec-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.dec-btn.selected-shortlist { background: var(--success-l); border-color: var(--success); color: var(--success); }
+.dec-btn.selected-hold      { background: var(--hold-l);    border-color: var(--hold);    color: var(--hold); }
+.dec-btn.selected-reject    { background: var(--danger-l);  border-color: var(--danger);  color: var(--danger); }
+
+.dec-sub { font-size: 10px; font-weight: 400; color: var(--muted); margin-top: 2px; }
+.dec-btn.selected-shortlist .dec-sub { color: var(--success); }
+.dec-btn.selected-hold      .dec-sub { color: var(--hold); }
+.dec-btn.selected-reject    .dec-sub { color: var(--danger); }
+
+/* ── Comparison ── */
+.compare-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+}
+
+.cand-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.cand-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+.cand-role { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+
+.mini-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 5px;
+  font-size: 11px;
+}
+
+.mini-bar-label { width: 60px; color: var(--muted); flex-shrink: 0; }
+.mini-bar-wrap  { flex: 1; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.mini-bar-fill  { height: 100%; border-radius: 3px; }
+.mini-bar-val   { width: 28px; text-align: right; font-weight: 600; color: var(--text); flex-shrink: 0; }
+
+.dec-badge {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* ── Toast ── */
+.toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #111827;
+  color: white;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  z-index: 999;
+  opacity: 0;
+  transition: all 0.25s;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── Progress bar for save ── */
+.save-progress {
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.save-progress-fill {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 2px;
+  width: 0%;
+  transition: width 0.4s ease;
+}
+
+/* ── Drive link ── */
+.drive-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.drive-link:hover { text-decoration: underline; }
+
+/* ── Mobile bottom nav ── */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  padding: 8px 0 env(safe-area-inset-bottom);
+  z-index: 200;
+}
+
+@media (max-width: 480px) {
+  .mobile-nav { display: flex; justify-content: space-around; }
+}
+
+.mob-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 12px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.mob-tab.active { color: var(--primary); }
+.mob-tab .mob-icon { font-size: 18px; line-height: 1; }
+
+/* ── Skeleton ── */
+.skel {
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 5px;
+  height: 14px;
+  margin-bottom: 8px;
+}
+
+@keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+/* ── Misc ── */
+.section-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0.75rem 0;
+}
+
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: var(--muted);
+}
+
+.empty-icon { font-size: 2.5rem; margin-bottom: 10px; }
+.empty-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+.empty-sub   { font-size: 13px; }
+</style>
+</head>
+<body>
+
+<!-- ── Nav ── -->
+<nav>
+  <div class="nav-brand">
+    <div class="brand-logo">EZN</div>
+    <div>
+      <div class="brand-name">Interview Lens</div>
+      <div class="brand-sub">Enternetz Engineering</div>
+    </div>
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('record')">🎙 Record</button>
+    <button class="nav-tab" onclick="showPage('compare')">📊 Compare</button>
+    <button class="nav-tab" onclick="showPage('guide')">📖 Guide</button>
+  </div>
+  <div class="nav-status">
+    <div class="dot" id="statusDot"></div>
+    <span id="statusTxt">Ready</span>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════ -->
+<!-- PAGE: RECORD                           -->
+<!-- ══════════════════════════════════════ -->
+<div class="page active" id="page-record">
+<div class="container">
+
+  <!-- Candidate Info -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">
+        <div class="icon" style="background:#eff6ff;">👤</div>
+        Candidate Details
+      </div>
+      <div class="hindi-hint">उम्मीदवार की जानकारी भरें</div>
+    </div>
+    <div class="card-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Candidate Name <span style="color:var(--danger)">*</span></label>
+          <div class="hindi-hint">उम्मीदवार का नाम</div>
+          <input type="text" id="candName" placeholder="Full name">
+        </div>
+        <div class="form-group">
+          <label>Role Applied For <span style="color:var(--danger)">*</span></label>
+          <div class="hindi-hint">पद / पोजीशन</div>
+          <select id="candRole">
+            <option value="">— Select Role —</option>
+            <option>Detailer / Draftsman</option>
+            <option>Senior Detailer</option>
+            <option>Checker</option>
+            <option>Senior Checker</option>
+            <option>Team Leader</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Interviewer Name</label>
+          <div class="hindi-hint">इंटरव्यूअर का नाम</div>
+          <input type="text" id="candInterviewer" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label>Experience (years)</label>
+          <div class="hindi-hint">अनुभव (वर्षों में)</div>
+          <input type="text" id="candExp" placeholder="e.g. 3">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recorder -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">
+        <div class="icon" style="background:#fef2f2;">🎙</div>
+        Recording
+      </div>
+      <div class="hindi-hint">रिकॉर्डिंग — माइक की अनुमति दें</div>
+    </div>
+    <div class="record-hero">
+      <div class="timer-display" id="timerDisplay">00:00</div>
+      <div class="timer-sub" id="timerSub">रिकॉर्ड करने के लिए नीचे दबाएं • Press Record to begin</div>
+
+      <div class="waveform" id="waveform"></div>
+
+      <div class="rec-btns">
+        <button class="btn btn-primary" id="btnRec" onclick="startRec()">⏺ Record</button>
+        <button class="btn btn-danger"  id="btnStop"  onclick="stopRec()"   disabled>⏹ Stop</button>
+        <button class="btn"             id="btnPause" onclick="togglePause()" disabled>⏸ Pause</button>
+        <button class="btn"             id="btnReset" onclick="resetSession()" disabled>↺ Reset</button>
+      </div>
+    </div>
+
+    <!-- Auto-save progress -->
+    <div style="padding: 0 1.1rem 1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:4px;">
+        <span>Auto-save to Drive <span class="hindi-hint" style="display:inline">(हर 2 मिनट में)</span></span>
+        <span id="lastSaveTxt">Not saved yet</span>
+      </div>
+      <div class="save-progress"><div class="save-progress-fill" id="saveBar"></div></div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stat-box">
+      <div class="stat-val" id="sSize">0 KB</div>
+      <div class="stat-lbl">Audio Size</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val" id="sWords">—</div>
+      <div class="stat-lbl">Words</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val" id="sSents">—</div>
+      <div class="stat-lbl">Sentences</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val" id="sDur">—</div>
+      <div class="stat-lbl">Duration</div>
+    </div>
+  </div>
+
+  <!-- Transcript -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">
+        <div class="icon" style="background:#f0fdf4;">📝</div>
+        Transcript
+      </div>
+      <div class="tx-toolbar">
+        <span class="tx-lang-badge">EN + HI</span>
+        <button class="btn btn-sm" onclick="clearTx()">Clear</button>
+      </div>
+    </div>
+    <div class="card-body">
+      <textarea id="txBox" placeholder="बोलना शुरू करें — transcript यहाँ दिखेगा&#10;Start speaking — live transcript will appear here.&#10;&#10;You can also type or paste the conversation manually."></textarea>
+      <div id="txHint">🎤 Listening for speech in EN / HI / Hinglish…</div>
+    </div>
+  </div>
+
+  <!-- Notes -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">
+        <div class="icon" style="background:#fffbeb;">🗒</div>
+        Interviewer Notes
+      </div>
+      <div class="hindi-hint">आपके नोट्स — रिकॉर्डिंग के दौरान लिखें</div>
+    </div>
+    <div class="card-body">
+      <textarea id="notesBox" style="min-height:80px;" placeholder="Quick notes during the interview — body language, energy, technical gaps, standout answers, red flags…&#10;&#10;इंटरव्यू के दौरान अपने notes यहाँ लिखें।"></textarea>
+    </div>
+  </div>
+
+  <!-- Analysis -->
+  <div class="card" id="analysisCard" style="display:none;">
+    <div class="card-header">
+      <div class="card-title">
+        <div class="icon" style="background:#f5f3ff;">🔍</div>
+        Conversation Analysis
+      </div>
+      <div id="overallBadge"></div>
+    </div>
+    <div class="card-body" id="analysisBody">
+      <div class="skel" style="width:55%"></div>
+      <div class="skel" style="width:80%"></div>
+      <div class="skel" style="width:65%"></div>
+    </div>
+  </div>
+
+  <!-- Decision -->
+  <div class="card" id="decisionCard" style="display:none;">
+    <div class="card-header">
+      <div class="card-title">
+        <div class="icon" style="background:#f0fdf4;">✅</div>
+        Decision
+      </div>
+      <div class="hindi-hint">उम्मीदवार का फैसला</div>
+    </div>
+    <div class="card-body">
+      <div class="decision-row">
+        <button class="dec-btn" id="decShortlist" onclick="setDecision('Shortlist')">
+          ✅ Shortlist
+          <div class="dec-sub">चुना गया</div>
+        </button>
+        <button class="dec-btn" id="decHold" onclick="setDecision('Hold')">
+          🕐 Hold
+          <div class="dec-sub">बाद में देखें</div>
+        </button>
+        <button class="dec-btn" id="decReject" onclick="setDecision('Reject')">
+          ✗ Reject
+          <div class="dec-sub">नहीं चुना गया</div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">
+        <div class="icon" style="background:#eff6ff;">⚡</div>
+        Actions
+      </div>
+    </div>
+    <div class="card-body" style="display:flex;gap:0.6rem;flex-wrap:wrap;">
+      <button class="btn btn-primary" onclick="runAnalysis()">🔍 Analyse</button>
+      <button class="btn btn-success" id="btnSaveDrive" onclick="saveAll()" disabled>☁ Save to Drive</button>
+      <button class="btn" onclick="downloadTx()">💾 Download Transcript</button>
+      <button class="btn" id="btnDlAudio" onclick="dlAudio()" disabled>⬇ Audio</button>
+      <button class="btn" onclick="copyTx()">📋 Copy Text</button>
+    </div>
+    <div style="padding:0 1.1rem 1rem;" id="driveStatus" style="display:none;">
+      <div id="driveLinkWrap" style="margin-top:8px;"></div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+</div><!-- /page-record -->
+
+
+<!-- ══════════════════════════════════════ -->
+<!-- PAGE: COMPARE                          -->
+<!-- ══════════════════════════════════════ -->
+<div class="page" id="page-compare">
+<div class="container">
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">
+        <div class="icon" style="background:#eff6ff;">📊</div>
+        Candidate Comparison
+      </div>
+      <button class="btn btn-sm" onclick="loadCandidates()">↻ Refresh</button>
+    </div>
+    <div class="card-body" id="compareBody">
+      <div class="empty-state">
+        <div class="empty-icon">📋</div>
+        <div class="empty-title">No candidates yet</div>
+        <div class="empty-sub">Complete and save interviews on the Record tab — they'll appear here for comparison.</div>
+        <div class="hindi-hint" style="margin-top:6px;">रिकॉर्ड टैब पर इंटरव्यू पूरा करें — फिर यहाँ दिखेगा।</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="rankCard" style="display:none;">
+    <div class="card-header">
+      <div class="card-title">
+        <div class="icon" style="background:#f0fdf4;">🏆</div>
+        Ranking by Overall Score
+      </div>
+    </div>
+    <div class="card-body" id="rankBody"></div>
+  </div>
+
+</div>
+</div><!-- /page-compare -->
+
+
+<!-- ══════════════════════════════════════ -->
+<!-- PAGE: GUIDE                            -->
+<!-- ══════════════════════════════════════ -->
+<div class="page" id="page-guide">
+<div class="container">
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">
+        <div class="icon" style="background:#eff6ff;">📖</div>
+        How to Use — उपयोग कैसे करें
+      </div>
+    </div>
+    <div class="card-body">
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="width:28px;height:28px;background:var(--primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">1</div>
+          <div>
+            <div style="font-weight:600;font-size:13px;">Fill candidate details</div>
+            <div class="hindi-hint">उम्मीदवार का नाम और पद भरें — यह ज़रूरी है।</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:3px;">Enter the candidate's name and select the role before recording. This labels all saved files correctly.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="width:28px;height:28px;background:var(--primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">2</div>
+          <div>
+            <div style="font-weight:600;font-size:13px;">Tap ⏺ Record — allow microphone</div>
+            <div class="hindi-hint">⏺ Record दबाएं — माइक की अनुमति दें।</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:3px;">iPhone users: open this in Safari and allow mic. The screen should stay on during recording. Android: use Chrome.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="width:28px;height:28px;background:var(--primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">3</div>
+          <div>
+            <div style="font-weight:600;font-size:13px;">Audio auto-saves to Drive every 2 min</div>
+            <div class="hindi-hint">ऑडियो हर 2 मिनट में अपने आप Drive में सेव होता है।</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:3px;">Files are saved to a folder called "Enternetz Interview Lens" in your Google Drive. Nothing is lost if the interview runs long.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="width:28px;height:28px;background:var(--primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">4</div>
+          <div>
+            <div style="font-weight:600;font-size:13px;">After interview: Analyse → Decide → Save</div>
+            <div class="hindi-hint">इंटरव्यू के बाद: Analyse करें → Decision लें → Save करें।</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:3px;">Run analysis, mark Shortlist / Hold / Reject, then Save to Drive. Full report + transcript go to Google Drive automatically.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="width:28px;height:28px;background:var(--primary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">5</div>
+          <div>
+            <div style="font-weight:600;font-size:13px;">Compare tab — see all candidates</div>
+            <div class="hindi-hint">Compare टैब में सभी उम्मीदवारों की तुलना करें।</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:3px;">The Compare tab loads all saved candidates from the shared Google Sheet — every panel member can see the same data.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- PEB Scoring Guide -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">
+        <div class="icon" style="background:#fef3c7;">⚙</div>
+        PEB Role Scoring Guide
+      </div>
+    </div>
+    <div class="card-body">
+      <div style="display:flex;flex-direction:column;gap:0.75rem;font-size:13px;">
+        <div><strong>Detailer / Draftsman</strong> — CAD proficiency, drawing reading speed, attention to detail, PEB member knowledge (rafters, purlins, girts, bracing)</div>
+        <div><strong>Senior Detailer</strong> — All above + connection details, anchor bolt plans, erection drawings, ability to work independently</div>
+        <div><strong>Checker</strong> — Drawing accuracy, error identification, code awareness, cross-checking skills, communication with detailers</div>
+        <div><strong>Senior Checker</strong> — All above + quality process ownership, mentoring ability, client drawing review experience</div>
+        <div><strong>Team Leader</strong> — Leadership, deadline management, workload distribution, client coordination, escalation handling</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Drive link -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">
+        <div class="icon" style="background:#f0fdf4;">📁</div>
+        Google Drive Folder
+      </div>
+    </div>
+    <div class="card-body">
+      <div style="font-size:13px;color:var(--muted);margin-bottom:10px;">All recordings, transcripts, and reports are saved here. Share this folder with your panel members.</div>
+      <div class="hindi-hint" style="margin-bottom:10px;">सभी फाइलें यहाँ सेव होती हैं — पैनल मेंबर्स के साथ शेयर करें।</div>
+      <button class="btn btn-primary btn-sm" onclick="openDriveFolder()">📂 Open Drive Folder</button>
+      <div id="driveFolderUrl" style="margin-top:8px;font-size:12px;color:var(--muted);"></div>
+    </div>
+  </div>
+
+</div>
+</div><!-- /page-guide -->
+
+
+<!-- Mobile bottom nav -->
+<div class="mobile-nav">
+  <button class="mob-tab active" id="mobRec" onclick="showPage('record')">
+    <div class="mob-icon">🎙</div>Record
+  </button>
+  <button class="mob-tab" id="mobCmp" onclick="showPage('compare')">
+    <div class="mob-icon">📊</div>Compare
+  </button>
+  <button class="mob-tab" id="mobGd" onclick="showPage('guide')">
+    <div class="mob-icon">📖</div>Guide
+  </button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ── Script ── -->
+<script>
+// ─── CONFIGURATION ────────────────────────────────────────
+var APPS_SCRIPT_URL = 'https://script.google.com/a/macros/enternetz.in/s/AKfycbzkZxA-m_vxo2L-L_C5ypcLXalsTS-Mz73SzWALdHQmBdPiU315CwMuKJTB4RP2yyA7/exec';
+
+// ─── Backend caller (fetch replaces google.script.run) ────
+function callBackend(action, payload, onSuccess, onError) {
+  var params = Object.assign({ action: action }, payload || {});
+  fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify(params)
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(r)   { if (onSuccess) onSuccess(r); })
+  .catch(function(e)  { if (onError)   onError(e); });
+}
+
+// ─── State ────────────────────────────────────────────────
+var mediaRecorder = null;
+var audioChunks   = [];
+var audioBlob     = null;
+var recognition   = null;
+var timerInterval = null;
+var autoSaveInterval = null;
+var startTime     = null;
+var pausedAt      = 0;
+var totalPaused   = 0;
+var isPaused      = false;
+var waveInterval  = null;
+var analyserNode  = null;
+var audioCtx      = null;
+var dataArray     = null;
+var waveBars      = [];
+var decision      = "";
+var lastMetrics   = null;
+var autoSaveCount = 0;
+var saveBarTimer  = null;
+var folderUrl     = "";
+
+// ─── Waveform ─────────────────────────────────────────────
+var wf = document.getElementById('waveform');
+for (var i = 0; i < 26; i++) {
+  var b = document.createElement('div');
+  b.className = 'wb';
+  b.style.height = '5px';
+  wf.appendChild(b);
+  waveBars.push(b);
+}
+
+function animateWave() {
+  if (analyserNode && dataArray) {
+    analyserNode.getByteTimeDomainData(dataArray);
+    waveBars.forEach(function(b, i) {
+      var idx = Math.floor((i / waveBars.length) * dataArray.length);
+      var v   = Math.abs((dataArray[idx] - 128) / 128);
+      b.style.height = Math.max(4, v * 56 + 4) + 'px';
+      b.classList.add('live');
+    });
+  } else {
+    waveBars.forEach(function(b) {
+      b.style.height = (4 + Math.random() * 3) + 'px';
+      b.classList.remove('live');
+    });
+  }
+}
+
+// ─── Record ───────────────────────────────────────────────
+function startRec() {
+  if (!document.getElementById('candName').value.trim()) {
+    toast('Please enter candidate name first. उम्मीदवार का नाम भरें।');
+    document.getElementById('candName').focus();
+    return;
+  }
+  if (!document.getElementById('candRole').value) {
+    toast('Please select a role. पद चुनें।');
+    return;
+  }
+
+  navigator.mediaDevices.getUserMedia({ audio: true }).then(function(stream) {
+    audioCtx     = new (window.AudioContext || window.webkitAudioContext)();
+    var src      = audioCtx.createMediaStreamSource(stream);
+    analyserNode = audioCtx.createAnalyser();
+    analyserNode.fftSize = 256;
+    dataArray    = new Uint8Array(analyserNode.fftSize);
+    src.connect(analyserNode);
+
+    var mime = ['audio/webm;codecs=opus','audio/ogg;codecs=opus','audio/webm','audio/ogg','audio/mp4']
+               .find(function(t){ return MediaRecorder.isTypeSupported(t); }) || '';
+    var opts = mime ? { mimeType: mime, audioBitsPerSecond: 32000 } : {};
+
+    mediaRecorder = new MediaRecorder(stream, opts);
+    audioChunks   = [];
+
+    mediaRecorder.ondataavailable = function(e) {
+      if (e.data.size > 0) audioChunks.push(e.data);
+      updateSize();
+    };
+
+    mediaRecorder.onstop = function() {
+      audioBlob = new Blob(audioChunks, { type: mime || 'audio/webm' });
+      document.getElementById('btnDlAudio').disabled  = false;
+      document.getElementById('btnSaveDrive').disabled = false;
+      updateSize();
+    };
+
+    mediaRecorder.start(1000);
+    startTime   = Date.now();
+    totalPaused = 0;
+    isPaused    = false;
+
+    timerInterval    = setInterval(updateTimer, 500);
+    waveInterval     = setInterval(animateWave, 80);
+
+    // Auto-save every 2 minutes
+    startAutoSaveCycle();
+
+    setStatus('rec', 'Recording…');
+    document.getElementById('timerSub').textContent = 'Recording in progress — रिकॉर्डिंग जारी है';
+    document.getElementById('btnRec').disabled   = true;
+    document.getElementById('btnStop').disabled  = false;
+    document.getElementById('btnPause').disabled = false;
+
+    startSpeechRec();
+
+  }).catch(function(err) {
+    var isFileProtocol = window.location.protocol === 'file:';
+    var msg = isFileProtocol
+      ? '⚠ Mic blocked on local files. Deploy to Apps Script first, then open the https:// URL.'
+      : '⚠ Mic denied. iPhone: open in Safari & allow mic. Android: open in Chrome & allow mic. (' + err.name + ')';
+    toast(msg);
+    document.getElementById('timerSub').textContent = isFileProtocol
+      ? 'Deploy via Apps Script to enable recording'
+      : 'Microphone permission needed — माइक की अनुमति दें';
+  });
+}
+
+function stopRec() {
+  if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+    mediaRecorder.stop();
+    mediaRecorder.stream.getTracks().forEach(function(t){ t.stop(); });
+  }
+  if (recognition) { try { recognition.stop(); } catch(e){} }
+  clearInterval(timerInterval);
+  clearInterval(waveInterval);
+  clearInterval(autoSaveInterval);
+  clearTimeout(saveBarTimer);
+
+  waveBars.forEach(function(b){ b.style.height='5px'; b.classList.remove('live'); });
+  document.getElementById('saveBar').style.width = '0%';
+
+  setStatus('ok', 'Done');
+  document.getElementById('timerSub').textContent = 'Recording complete — रिकॉर्डिंग पूरी हुई';
+  document.getElementById('btnRec').disabled   = false;
+  document.getElementById('btnStop').disabled  = true;
+  document.getElementById('btnPause').disabled = true;
+  document.getElementById('btnReset').disabled = false;
+
+  updateWordCount();
+  toast('Recording stopped. Run Analyse. रिकॉर्डिंग रुकी।');
+}
+
+function togglePause() {
+  if (!mediaRecorder) return;
+  if (!isPaused) {
+    if (mediaRecorder.state === 'recording') mediaRecorder.pause();
+    if (recognition) { try{ recognition.stop(); }catch(e){} }
+    pausedAt = Date.now();
+    isPaused = true;
+    clearInterval(autoSaveInterval);
+    document.getElementById('btnPause').textContent = '▶ Resume';
+    document.getElementById('timerSub').textContent  = 'Paused — रुका हुआ है';
+    setStatus('', 'Paused');
+    clearInterval(waveInterval);
+    waveBars.forEach(function(b){ b.style.height='5px'; b.classList.remove('live'); });
+  } else {
+    if (mediaRecorder.state === 'paused') mediaRecorder.resume();
+    totalPaused += Date.now() - pausedAt;
+    isPaused = false;
+    document.getElementById('btnPause').textContent = '⏸ Pause';
+    document.getElementById('timerSub').textContent  = 'Recording in progress — रिकॉर्डिंग जारी है';
+    setStatus('rec', 'Recording…');
+    waveInterval = setInterval(animateWave, 80);
+    startAutoSaveCycle();
+    startSpeechRec();
+  }
+}
+
+function resetSession() {
+  audioChunks = []; audioBlob = null;
+  document.getElementById('txBox').value     = '';
+  document.getElementById('notesBox').value  = '';
+  document.getElementById('timerDisplay').textContent = '00:00';
+  document.getElementById('timerSub').textContent     = 'रिकॉर्ड करने के लिए नीचे दबाएं • Press Record to begin';
+  document.getElementById('sSize').textContent  = '0 KB';
+  document.getElementById('sWords').textContent = '—';
+  document.getElementById('sSents').textContent = '—';
+  document.getElementById('sDur').textContent   = '—';
+  document.getElementById('analysisCard').style.display = 'none';
+  document.getElementById('decisionCard').style.display = 'none';
+  document.getElementById('btnDlAudio').disabled  = true;
+  document.getElementById('btnSaveDrive').disabled = true;
+  document.getElementById('btnReset').disabled    = true;
+  document.getElementById('lastSaveTxt').textContent = 'Not saved yet';
+  document.getElementById('saveBar').style.width = '0%';
+  decision    = '';
+  lastMetrics = null;
+  setStatus('', 'Ready');
+}
+
+// ─── Auto-save cycle ──────────────────────────────────────
+function startAutoSaveCycle() {
+  clearInterval(autoSaveInterval);
+  animateSaveBar();
+  autoSaveInterval = setInterval(function() {
+    autoSaveAudio();
+    animateSaveBar();
+  }, 120000); // every 2 min
+}
+
+function animateSaveBar() {
+  var bar = document.getElementById('saveBar');
+  bar.style.transition = 'none';
+  bar.style.width = '0%';
+  setTimeout(function() {
+    bar.style.transition = 'width 118s linear';
+    bar.style.width = '100%';
+  }, 50);
+}
+
+function autoSaveAudio() {
+  if (!audioChunks.length) return;
+  var chunks = audioChunks.slice();
+  var mime   = (mediaRecorder && mediaRecorder.mimeType) || 'audio/webm';
+  var blob   = new Blob(chunks, { type: mime });
+  blobToBase64(blob, function(b64) {
+    var name = document.getElementById('candName').value.trim() || 'Unknown';
+    var role = document.getElementById('candRole').value || 'Unknown';
+    // Pass fixedName=true so the backend deletes the old file and saves
+    // one cumulative file — not 20 separate 2-minute clips
+    callBackend('saveAudioCumulative', { b64: b64, mimeType: mime, candidateName: name, role: role },
+      function(r) {
+        if (r && r.success) {
+          autoSaveCount++;
+          document.getElementById('lastSaveTxt').textContent =
+            'Auto-saved at ' + new Date().toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit'});
+        }
+      });
+  });
+}
+
+// ─── Timer ────────────────────────────────────────────────
+function updateTimer() {
+  if (isPaused) return;
+  var elapsed = Math.floor((Date.now() - startTime - totalPaused) / 1000);
+  var m = String(Math.floor(elapsed / 60)).padStart(2,'0');
+  var s = String(elapsed % 60).padStart(2,'0');
+  document.getElementById('timerDisplay').textContent = m + ':' + s;
+  document.getElementById('sDur').textContent = Math.floor(elapsed / 60) + 'm ' + (elapsed % 60) + 's';
+}
+
+function getDurationMins() {
+  if (!startTime) return 0;
+  return Math.round((Date.now() - startTime - totalPaused) / 60000);
+}
+
+// ─── Size ─────────────────────────────────────────────────
+function updateSize() {
+  var bytes = audioChunks.reduce(function(a,c){ return a + c.size; }, 0);
+  var kb = bytes / 1024;
+  document.getElementById('sSize').textContent = kb < 1024 ? Math.round(kb) + ' KB' : (kb/1024).toFixed(1) + ' MB';
+}
+
+// ─── Word count ───────────────────────────────────────────
+function updateWordCount() {
+  var text  = document.getElementById('txBox').value.trim();
+  var words = text ? text.split(/\s+/).filter(Boolean).length : 0;
+  var sents = text ? text.split(/[.!?।]+/).filter(function(s){ return s.trim(); }).length : 0;
+  document.getElementById('sWords').textContent = words || '—';
+  document.getElementById('sSents').textContent = sents || '—';
+}
+document.getElementById('txBox').addEventListener('input', updateWordCount);
+
+// ─── Speech Recognition ───────────────────────────────────
+function startSpeechRec() {
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    document.getElementById('txHint').textContent = 'Live transcription not supported. Please type manually.';
+    return;
+  }
+  recognition = new SR();
+  recognition.continuous     = true;
+  recognition.interimResults = true;
+  recognition.lang           = 'hi-IN'; // Hindi first, picks up English too
+
+  recognition.onresult = function(e) {
+    var box     = document.getElementById('txBox');
+    var interim = '';
+    for (var i = e.resultIndex; i < e.results.length; i++) {
+      var t = e.results[i][0].transcript;
+      if (e.results[i].isFinal) {
+        box.value += t + ' ';
+        updateWordCount();
+      } else { interim = t; }
+    }
+    document.getElementById('txHint').textContent = interim ? '🎤 Hearing: "' + interim + '"' : '🎤 Listening…';
+  };
+
+  recognition.onerror = function(e) {
+    if (e.error !== 'no-speech' && e.error !== 'aborted')
+      document.getElementById('txHint').textContent = 'Speech error: ' + e.error;
+  };
+
+  recognition.onend = function() {
+    if (!isPaused && mediaRecorder && mediaRecorder.state === 'recording') {
+      try { recognition.start(); } catch(ex) {}
+    }
+  };
+
+  try { recognition.start(); } catch(ex) {}
+}
+
+// ─── Analysis ─────────────────────────────────────────────
+function runAnalysis() {
+  var text = document.getElementById('txBox').value.trim();
+  if (!text) { toast('No transcript yet. Please record or type. Transcript नहीं है।'); return; }
+
+  var card = document.getElementById('analysisCard');
+  card.style.display = 'block';
+  card.scrollIntoView({ behavior:'smooth', block:'start' });
+
+  document.getElementById('analysisBody').innerHTML =
+    '<div class="skel" style="width:60%"></div><div class="skel" style="width:80%"></div><div class="skel" style="width:45%"></div><div class="skel" style="width:70%"></div>';
+
+  setTimeout(function() {
+    var role    = document.getElementById('candRole').value;
+    var metrics = computeMetrics(text, role);
+    lastMetrics = metrics;
+    renderAnalysis(metrics);
+    document.getElementById('decisionCard').style.display = 'block';
+  }, 800);
+}
+
+function computeMetrics(text, role) {
+  var lower = text.toLowerCase();
+  var words = text.split(/\s+/).filter(Boolean);
+  var sents = text.split(/[.!?।]+/).filter(function(s){ return s.trim(); });
+  var wc    = words.length;
+
+  // General English + Hinglish positive/negative
+  var pos   = ['great','excellent','happy','good','love','fantastic','wonderful','amazing','excited','confident','absolutely','definitely','yes','perfect','sure','glad','thank','appreciate','enjoy','haan','bilkul','theek','acha','badhiya','zaroor'];
+  var neg   = ['no','not','never','bad','poor','terrible','fail','wrong','issue','problem','difficult','unfortunately','sorry','struggle','nahi','nahi kiya','mujhe nahi','mushkil'];
+  var hedge = ['maybe','perhaps','might','could','possibly','sometimes','generally','i think','i believe','i guess','shayad','lagta hai','pata nahi','ho sakta'];
+  var fill  = ['um','uh','like','you know','basically','actually','literally','right','okay','so','well','just','matlab','yaar','arey','haan na'];
+  var excite= ['excited','amazing','incredible','fantastic','love','passion','awesome','excellent','brilliant','passionate','jo karna chahta','mujhe bahut pasand'];
+
+  // PEB-specific keyword banks
+  var pebKeywords = {
+    'Detailer / Draftsman':  ['cad','autocad','drawing','rafter','purlin','girt','bracing','anchor','bolt','connection','detail','dxf','dwg','2d','column','beam','eave','ridge','layout'],
+    'Senior Detailer':       ['connection detail','anchor bolt','erection','shop drawing','ga drawing','approval','sequence','independent','coordination','tolerance','welded'],
+    'Checker':               ['check','review','error','quality','accuracy','cross-check','markup','comment','discrepancy','verify','rfi','revision','standard'],
+    'Senior Checker':        ['qa','qc','process','mentor','client','ownership','escalation','sign-off','approval drawing','responsibility'],
+    'Team Leader':           ['team','lead','deadline','delivery','schedule','coordinate','manage','assign','escalate','client','feedback','planning','output','target']
+  };
+
+  function count(arr) {
+    return arr.reduce(function(a, w){ return a + (lower.split(w).length - 1); }, 0);
+  }
+
+  var posC    = count(pos);
+  var negC    = count(neg);
+  var hedgeC  = count(hedge);
+  var fillC   = count(fill);
+  var excC    = count(excite);
+  var pebKeys = pebKeywords[role] || [];
+  var pebC    = count(pebKeys);
+
+  // Scores
+  var toneScore  = Math.min(100, Math.max(0, Math.round(50 + ((posC - negC) / Math.max(wc,1)) * 600)));
+  var confScore  = Math.min(100, Math.max(0, Math.round(75 - (hedgeC / Math.max(wc,1)) * 400)));
+  var excScore   = Math.min(100, Math.max(0, Math.round((excC / Math.max(wc,1)) * 800 + 20)));
+  var honScore   = Math.min(100, Math.max(0, Math.round(60 + posC * 2 - negC)));
+  var avgSentLen = wc / Math.max(sents.length, 1);
+  var clarScore  = Math.min(100, Math.max(0, Math.round(100 - (avgSentLen - 10) * 3)));
+  var fillRate   = Math.round((fillC / Math.max(wc,1)) * 100);
+  var qCount     = (text.match(/\?/g) || []).length;
+  var uniqueW    = new Set(words.map(function(w){ return w.toLowerCase().replace(/[^a-z]/g,''); }));
+  var vocabScore = Math.min(100, Math.round((uniqueW.size / Math.max(wc,1)) * 150));
+  var pebScore   = Math.min(100, Math.round((pebC / Math.max(pebKeys.length, 1)) * 120));
+  var overallScore = Math.round(
+    toneScore  * 0.15 +
+    confScore  * 0.20 +
+    excScore   * 0.10 +
+    honScore   * 0.10 +
+    clarScore  * 0.15 +
+    vocabScore * 0.10 +
+    pebScore   * 0.20
+  );
+
+  // Topics
+  var stop = new Set(['the','a','an','and','or','but','in','on','at','to','for','of','with','that','this','is','are','was','were','have','had','has','be','been','being','i','you','he','she','it','we','they','my','your','our','their','do','did','does','will','would','can','could','should','not','no','so','if','as','by','from','than','then','when','where','who','what','how','all','just','very','also','more','some','any','these','those','there','here','after','before','which','while','each','both','few','many','much','other','such','only','own','same','too','get','got','said','main','mera','meri','mere','aur','nahi','kiya','hai','hain','tha','the','ko','ke','ka','ki','se','ne','hum','aap','woh','yeh','jo','kuch','bahut','phir']);
+  var tMap = {};
+  words.forEach(function(w) {
+    var c = w.toLowerCase().replace(/[^a-z]/g,'');
+    if (c.length > 3 && !stop.has(c)) tMap[c] = (tMap[c] || 0) + 1;
+  });
+  var topics = Object.entries(tMap).sort(function(a,b){ return b[1]-a[1]; }).slice(0,8).map(function(e){ return e[0]; });
+
+  var tone      = toneScore >= 65 ? 'Positive' : toneScore >= 40 ? 'Neutral' : 'Negative';
+  var toneColor = toneScore >= 65 ? '#0f7b4f' : toneScore >= 40 ? '#b45309' : '#b91c1c';
+  var conf      = confScore >= 65 ? 'High' : confScore >= 40 ? 'Moderate' : 'Low';
+  var confColor = confScore >= 65 ? '#0f7b4f' : confScore >= 40 ? '#b45309' : '#b91c1c';
+  var excLabel  = excScore  >= 60 ? 'High'     : excScore >= 30  ? 'Moderate' : 'Low';
+  var honLabel  = honScore  >= 65 ? 'Open'     : honScore >= 40  ? 'Guarded'  : 'Evasive';
+  var clarLabel = clarScore >= 65 ? 'Clear'    : clarScore >= 40 ? 'Moderate' : 'Verbose';
+  var fillLabel = fillRate  <= 4  ? 'Very Low' : fillRate  <= 8  ? 'Normal'   : fillRate <= 15 ? 'High' : 'Very High';
+  var fillColor = fillRate  <= 8  ? '#0f7b4f' : fillRate <= 15 ? '#b45309' : '#b91c1c';
+  var pebLabel  = pebScore  >= 65 ? 'Strong'   : pebScore  >= 35 ? 'Moderate' : 'Weak';
+  var pebColor  = pebScore  >= 65 ? '#0f7b4f' : pebScore  >= 35 ? '#b45309' : '#b91c1c';
+
+  return {
+    wc: wc, sentCount: sents.length, avgSentLen: avgSentLen.toFixed(1),
+    toneScore, tone, toneColor,
+    confScore, conf, confColor,
+    excScore, excLabel,
+    honScore, honLabel,
+    clarScore, clarLabel,
+    fillRate, fillLabel, fillColor, fillC,
+    qCount, vocabScore,
+    pebScore, pebLabel, pebColor,
+    overallScore, topics,
+    hedgeC
+  };
+}
+
+function mc(score) {
+  return score >= 65 ? '#0f7b4f' : score >= 40 ? '#b45309' : '#b91c1c';
+}
+
+function renderAnalysis(m) {
+  var ob = document.getElementById('overallBadge');
+  var oc = mc(m.overallScore);
+  ob.innerHTML = '<span class="tag" style="background:' + oc + '22;color:' + oc + ';border:1px solid ' + oc + '44;font-size:12px;font-weight:700;">' + m.overallScore + '/100</span>';
+
+  var insights = buildInsights(m);
+
+  document.getElementById('analysisBody').innerHTML =
+    '<div class="metric-grid">' +
+    mkCard('Tone', m.tone, m.toneScore, m.toneColor) +
+    mkCard('Confidence', m.conf, m.confScore, m.confColor) +
+    mkCard('Honesty', m.honLabel, m.honScore, mc(m.honScore)) +
+    mkCard('Clarity', m.clarLabel, m.clarScore, mc(m.clarScore)) +
+    mkCard('Excitement', m.excLabel, m.excScore, mc(m.excScore)) +
+    mkCard('PEB Domain Knowledge', m.pebLabel, m.pebScore, m.pebColor) +
+    '</div>' +
+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-bottom:0.75rem;">' +
+    statMini('Filler Words', m.fillRate + '%', m.fillColor, '(' + m.fillLabel + ')') +
+    statMini('Questions Asked', m.qCount, m.qCount >= 2 ? '#0f7b4f' : '#b45309', '') +
+    statMini('Avg Sentence Length', m.avgSentLen + ' words', mc(m.clarScore), '') +
+    statMini('Vocabulary', m.vocabScore + '/100', mc(m.vocabScore), '') +
+    '</div>' +
+
+    (m.topics.length ? '<div style="margin-bottom:0.75rem;"><div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px;">Key Topics Detected</div><div style="display:flex;flex-wrap:wrap;gap:5px;">' + m.topics.map(function(t){ return '<span class="tag" style="background:var(--primary-l);color:var(--primary);font-size:11px;">' + t + '</span>'; }).join('') + '</div></div>' : '') +
+
+    '<div class="insight-list">' + insights.map(function(h){ return '<div class="insight-item ' + h.cls + '"><div class="insight-icon">' + h.icon + '</div><div>' + h.text + '</div></div>'; }).join('') + '</div>';
+}
+
+function mkCard(name, label, score, color) {
+  return '<div class="metric-card">' +
+    '<div class="m-name">' + name + '</div>' +
+    '<div class="m-val" style="color:' + color + '">' + label + '</div>' +
+    '<div class="m-bar"><div class="m-fill" style="width:' + score + '%;background:' + color + ';"></div></div>' +
+    '<div class="m-sub">' + score + ' / 100</div>' +
+    '</div>';
+}
+
+function statMini(name, val, color, sub) {
+  return '<div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:0.65rem 0.8rem;">' +
+    '<div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;">' + name + '</div>' +
+    '<div style="font-size:15px;font-weight:700;color:' + color + ';">' + val + ' <span style="font-size:11px;font-weight:400;color:var(--muted);">' + sub + '</span></div>' +
+    '</div>';
+}
+
+function buildInsights(m) {
+  var h = [];
+  var role = document.getElementById('candRole').value;
+
+  if (m.pebScore >= 65) h.push({cls:'good', icon:'✓', text: 'Strong domain knowledge for ' + role + ' role — used relevant PEB/CAD terminology confidently.'});
+  if (m.pebScore < 35)  h.push({cls:'bad',  icon:'✗', text: 'Low PEB/CAD keyword usage. Candidate may lack technical domain knowledge for ' + role + '. Probe deeper.'});
+  if (m.toneScore >= 65) h.push({cls:'good', icon:'✓', text: 'Positive tone throughout — good cultural fit signal.'});
+  if (m.toneScore < 40)  h.push({cls:'bad',  icon:'✗', text: 'Negative tone detected. Could reflect low confidence or dissatisfaction.'});
+  if (m.confScore >= 65) h.push({cls:'good', icon:'✓', text: 'High confidence — minimal hedging, decisive answers.'});
+  if (m.confScore < 45)  h.push({cls:'warn', icon:'△', text: 'Frequent hedging words (' + m.hedgeC + ' instances). May struggle with ownership in senior roles.'});
+  if (m.fillRate > 12)   h.push({cls:'warn', icon:'△', text: 'High filler word rate (' + m.fillRate + '%). May affect professional communication with clients.'});
+  if (m.fillRate <= 4)   h.push({cls:'good', icon:'✓', text: 'Very low filler word rate — clean, articulate communication.'});
+  if (m.excScore >= 60)  h.push({cls:'good', icon:'✓', text: 'Genuine enthusiasm detected — candidate appears motivated for the role.'});
+  if (m.excScore < 25)   h.push({cls:'warn', icon:'△', text: 'Low excitement signals. Candidate may be under-motivated or nervous.'});
+  if (m.qCount === 0)    h.push({cls:'warn', icon:'△', text: 'No questions asked by candidate. Low engagement or passiveness.'});
+  if (m.qCount >= 2)     h.push({cls:'good', icon:'✓', text: m.qCount + ' questions asked — shows genuine interest and initiative.'});
+  if (m.clarScore < 40)  h.push({cls:'warn', icon:'△', text: 'Long-winded answers (avg ' + m.avgSentLen + ' words/sentence). May have difficulty explaining technical work clearly.'});
+  if (m.honScore >= 65)  h.push({cls:'good', icon:'✓', text: 'Transparent, open communication — good for a collaborative team like Enternetz.'});
+  if (h.length === 0)    h.push({cls:'info', icon:'ℹ', text: 'Analysis complete. Add more transcript content for deeper insights.'});
+  return h;
+}
+
+// ─── Decision ─────────────────────────────────────────────
+function setDecision(d) {
+  decision = d;
+  ['Shortlist','Hold','Reject'].forEach(function(x) {
+    var el = document.getElementById('dec' + x);
+    el.className = 'dec-btn' + (x === d ? ' selected-' + x.toLowerCase() : '');
+  });
+  toast('Decision: ' + d + ' ✓');
+}
+
+// ─── Save to Drive ────────────────────────────────────────
+function saveAll() {
+  if (!lastMetrics) { toast('Run Analyse first. पहले Analyse करें।'); return; }
+  var name = document.getElementById('candName').value.trim() || 'Unknown';
+  var role = document.getElementById('candRole').value || 'Unknown';
+  var intv = document.getElementById('candInterviewer').value.trim() || 'Panel';
+  var tx   = document.getElementById('txBox').value;
+  var note = document.getElementById('notesBox').value;
+  var dec  = decision || 'Pending';
+
+  var data = {
+    candidateName: name,
+    role: role,
+    interviewer: intv,
+    duration: getDurationMins(),
+    transcript: tx,
+    notes: note,
+    decision: dec,
+    metrics: lastMetrics
+  };
+
+  document.getElementById('btnSaveDrive').textContent = '⏳ Saving…';
+  document.getElementById('btnSaveDrive').disabled    = true;
+
+  // Save record (transcript + report + sheet row)
+  callBackend('saveRecord', { data: data },
+    function(r) {
+      document.getElementById('btnSaveDrive').textContent = '☁ Save to Drive';
+      document.getElementById('btnSaveDrive').disabled    = false;
+      if (r && r.success) {
+        document.getElementById('lastSaveTxt').textContent = 'Saved at ' + new Date().toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit'});
+        toast('✓ Saved to Drive! Google Drive में सेव हो गया।');
+        if (audioBlob) {
+          blobToBase64(audioBlob, function(b64) {
+            callBackend('saveAudio', { b64: b64, mimeType: audioBlob.type, candidateName: name, role: role });
+          });
+        }
+      } else {
+        toast('Save failed: ' + (r ? r.error : 'unknown'));
+      }
+    },
+    function(err) {
+      document.getElementById('btnSaveDrive').textContent = '☁ Save to Drive';
+      document.getElementById('btnSaveDrive').disabled    = false;
+      toast('Network error — check connection. ' + err.message);
+    }
+  );
+}
+
+// ─── Download ─────────────────────────────────────────────
+function downloadTx() {
+  var text = document.getElementById('txBox').value.trim();
+  if (!text) { toast('No transcript. Transcript नहीं है।'); return; }
+  var name = document.getElementById('candName').value.trim() || 'candidate';
+  dlText(text, name + '_transcript.txt');
+  toast('Transcript downloaded.');
+}
+
+function dlAudio() {
+  if (!audioBlob) { toast('No audio recorded.'); return; }
+  var ext  = audioBlob.type.includes('ogg') ? 'ogg' : 'webm';
+  var name = (document.getElementById('candName').value.trim() || 'interview') + '_audio.' + ext;
+  var url  = URL.createObjectURL(audioBlob);
+  var a    = document.createElement('a');
+  a.href   = url; a.download = name; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 3000);
+}
+
+function copyTx() {
+  var text = document.getElementById('txBox').value;
+  if (!text) { toast('Nothing to copy.'); return; }
+  navigator.clipboard.writeText(text).then(function(){ toast('Copied! कॉपी हो गया।'); });
+}
+
+function clearTx() {
+  document.getElementById('txBox').value = '';
+  updateWordCount();
+}
+
+function dlText(content, filename) {
+  var blob = new Blob([content], { type:'text/plain;charset=utf-8' });
+  var url  = URL.createObjectURL(blob);
+  var a    = document.createElement('a');
+  a.href   = url; a.download = filename; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 3000);
+}
+
+// ─── Compare ──────────────────────────────────────────────
+function loadCandidates() {
+  document.getElementById('compareBody').innerHTML = '<div class="skel"></div><div class="skel" style="width:70%"></div><div class="skel" style="width:55%"></div>';
+
+  callBackend('getCandidates', {},
+    function(r) {
+      if (!r || !r.success || !r.candidates || r.candidates.length === 0) {
+        document.getElementById('compareBody').innerHTML =
+          '<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">No candidates saved yet</div><div class="empty-sub">Complete and save interviews.</div></div>';
+        document.getElementById('rankCard').style.display = 'none';
+        return;
+      }
+      renderComparison(r.candidates);
+    },
+    function(err) {
+      document.getElementById('compareBody').innerHTML = '<div style="color:var(--danger);font-size:13px;">Error loading: ' + err.message + '</div>';
+    }
+  );
+}
+
+function renderComparison(cands) {
+  var grid = document.getElementById('compareBody');
+  var html = '<div class="compare-grid">';
+  cands.slice(-20).forEach(function(c) {
+    var score = parseInt(c['Overall Score']) || 0;
+    var dec   = c['Decision'] || 'Pending';
+    var decCls= dec === 'Shortlist' ? 'background:#d1fae5;color:#065f46' : dec === 'Reject' ? 'background:#fee2e2;color:#7f1d1d' : 'background:#ede9fe;color:#4c1d95';
+
+    html += '<div class="cand-card">' +
+      '<div class="cand-name">' + (c['Candidate Name'] || '—') + '</div>' +
+      '<div class="cand-role">' + (c['Role'] || '—') + ' · ' + (c['Date'] || '') + '</div>' +
+      miniBar('Overall', score) +
+      miniBar('Tone', parseInt(c['Tone Score']) || 0) +
+      miniBar('Confidence', parseInt(c['Confidence Score']) || 0) +
+      miniBar('PEB Domain', parseInt(c['Overall Score']) || 0) +
+      '<div class="dec-badge" style="' + decCls + '">' + dec + '</div>' +
+      '</div>';
+  });
+  html += '</div>';
+  grid.innerHTML = html;
+
+  // Ranking
+  var sorted = cands.slice().sort(function(a,b){ return (parseInt(b['Overall Score'])||0) - (parseInt(a['Overall Score'])||0); });
+  var rCard  = document.getElementById('rankCard');
+  var rBody  = document.getElementById('rankBody');
+  rCard.style.display = 'block';
+  rBody.innerHTML = '<div style="display:flex;flex-direction:column;gap:6px;">' +
+    sorted.slice(0, 10).map(function(c, i) {
+      var score = parseInt(c['Overall Score']) || 0;
+      var bar   = mc(score);
+      return '<div style="display:flex;align-items:center;gap:10px;padding:8px;background:var(--bg);border-radius:7px;border:1px solid var(--border);">' +
+        '<div style="width:24px;height:24px;border-radius:50%;background:' + (i < 3 ? '#1a56db' : '#9ca3af') + ';color:white;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;">' + (i+1) + '</div>' +
+        '<div style="flex:1;">' +
+        '<div style="font-size:13px;font-weight:600;">' + (c['Candidate Name'] || '—') + '</div>' +
+        '<div style="font-size:11px;color:var(--muted);">' + (c['Role'] || '—') + '</div>' +
+        '</div>' +
+        '<div style="font-size:15px;font-weight:700;color:' + bar + ';">' + score + '</div>' +
+        '</div>';
+    }).join('') +
+    '</div>';
+}
+
+function miniBar(label, val) {
+  var color = mc(val);
+  return '<div class="mini-bar-row">' +
+    '<div class="mini-bar-label">' + label + '</div>' +
+    '<div class="mini-bar-wrap"><div class="mini-bar-fill" style="width:' + val + '%;background:' + color + ';"></div></div>' +
+    '<div class="mini-bar-val">' + val + '</div>' +
+    '</div>';
+}
+
+// ─── Drive folder ─────────────────────────────────────────
+function openDriveFolder() {
+  if (folderUrl) { window.open(folderUrl, '_blank'); return; }
+  callBackend('getFolderUrl', {},
+    function(r) {
+      if (r && r.success) {
+        folderUrl = r.url;
+        document.getElementById('driveFolderUrl').textContent = r.url;
+        window.open(r.url, '_blank');
+      }
+    }
+  );
+}
+
+// ─── Nav ──────────────────────────────────────────────────
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('page-' + id).classList.add('active');
+
+  document.querySelectorAll('.nav-tab').forEach(function(t){ t.classList.remove('active'); });
+  document.querySelectorAll('.mob-tab').forEach(function(t){ t.classList.remove('active'); });
+
+  var map = { record: 0, compare: 1, guide: 2 };
+  var tabs = document.querySelectorAll('.nav-tab');
+  if (tabs[map[id]]) tabs[map[id]].classList.add('active');
+  var mobs = { record: 'mobRec', compare: 'mobCmp', guide: 'mobGd' };
+  var mob  = document.getElementById(mobs[id]);
+  if (mob) mob.classList.add('active');
+
+  if (id === 'compare') loadCandidates();
+}
+
+// ─── Status ───────────────────────────────────────────────
+function setStatus(type, text) {
+  var dot = document.getElementById('statusDot');
+  dot.className = 'dot' + (type ? ' ' + type : '');
+  document.getElementById('statusTxt').textContent = text;
+}
+
+// ─── Toast ────────────────────────────────────────────────
+function toast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 3200);
+}
+
+// ─── Helpers ──────────────────────────────────────────────
+function blobToBase64(blob, cb) {
+  var r = new FileReader();
+  r.onload = function(){ cb(r.result.split(',')[1]); };
+  r.readAsDataURL(blob);
+}
+
+// ─── Init ─────────────────────────────────────────────────
+window.onload = function() {
+  callBackend('getFolderUrl', {}, function(r){ if (r && r.success) folderUrl = r.url; });
+};
+</script>
+</body>
+</html>
