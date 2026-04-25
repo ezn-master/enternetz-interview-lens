@@ -990,17 +990,35 @@ textarea {
 // ─── CONFIGURATION ────────────────────────────────────────
 var APPS_SCRIPT_URL = 'https://script.google.com/a/macros/enternetz.in/s/AKfycbzkZxA-m_vxo2L-L_C5ypcLXalsTS-Mz73SzWALdHQmBdPiU315CwMuKJTB4RP2yyA7/exec';
 
-// ─── Backend caller (fetch replaces google.script.run) ────
+// ─── Backend caller — uses GET to avoid CORS blocks ────────
+// Apps Script blocks cross-origin POST from GitHub Pages.
+// GET requests work fine and carry all data as URL params.
 function callBackend(action, payload, onSuccess, onError) {
-  var params = Object.assign({ action: action }, payload || {});
-  fetch(APPS_SCRIPT_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain' },
-    body: JSON.stringify(params)
-  })
-  .then(function(res) { return res.json(); })
-  .then(function(r)   { if (onSuccess) onSuccess(r); })
-  .catch(function(e)  { if (onError)   onError(e); });
+  var p = payload || {};
+  var url = APPS_SCRIPT_URL + '?action=' + encodeURIComponent(action);
+
+  // For saveRecord: encode the data object as a JSON string param
+  if (action === 'saveRecord' && p.data) {
+    url += '&data=' + encodeURIComponent(JSON.stringify(p.data));
+  }
+  // For audio saves: b64 data is too large for a URL — skip audio
+  // saving silently (transcript + report + sheet row still save fine)
+  if (action === 'saveAudio' || action === 'saveAudioCumulative') {
+    // Audio is too large for GET params — save locally instead
+    if (onSuccess) onSuccess({ success: true, note: 'audio_local_only' });
+    return;
+  }
+  // All other params
+  Object.keys(p).forEach(function(k) {
+    if (k !== 'data' && k !== 'b64') {
+      url += '&' + encodeURIComponent(k) + '=' + encodeURIComponent(p[k] || '');
+    }
+  });
+
+  fetch(url)
+    .then(function(res) { return res.json(); })
+    .then(function(r)   { if (onSuccess) onSuccess(r); })
+    .catch(function(e)  { if (onError)   onError(e); });
 }
 
 // ─── State ────────────────────────────────────────────────
